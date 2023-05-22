@@ -1,3 +1,5 @@
+[Plink repo](https://github.com/chrchang/plink-ng/tree/master)
+
 
 vcf.gz -> vcf -> process into pandas df
 
