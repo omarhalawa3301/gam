@@ -1,25 +1,32 @@
 
 vcf.gz -> vcf -> process into pandas df
+
 take in phen  -> process into pandas df 
 
 May also implement .bed input later?? 
 
 And then, perform linear regression on each SNP via a set of for-loops, etc..
+
 Manhattan plot at end (get from lab qqman)
+
 observed vs expected -log10(p) plot
 
 When parse header in:
+
 #filter in header, if below a certain threshold, do filtering pipeline
+
 Verify that header information matches pandas df information (# of samples, # of snps, etc..)
+
 
 Include output directory
 
 Allow no sex (some samples dont have sex in dataset) Does this matter (if there was important snp in y chromosome?) 
+
 if sex is allowed then qqman plot would have chr 23 too?
 
 
 
-MAF
+MAF??
 
 Take in vcf file via:
 
