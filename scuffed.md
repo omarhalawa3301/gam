@@ -72,6 +72,7 @@ OR
 	        sep='\t'
 	    ).rename(columns={'#CHROM': 'CHROM'})
 
+**NOTE:** 'QUAL': str ? Should be int?
 
 Also take in a phen file
 	python open file to read in, very simple format
