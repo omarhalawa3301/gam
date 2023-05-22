@@ -24,7 +24,12 @@ Allow no sex (some samples dont have sex in dataset) Does this matter (if there 
 
 if sex is allowed then qqman plot would have chr 23 too?
 
-
+format after the header:
+#CHROM POS ID REF ALT QUAL FILTER INFO FORMAT SAMPLE1 SAMPLE2 SAMPLE3...
+where CHROM and POS tell the position of the snp (whose id is ID), 
+REF and ALT are reference and alternative alleles,
+FILTER will say PASS if this snp meets all of the requirements and will have an id which tells us how it is disqualified from the analysis
+FORMAT is the format of each sample for that snp (ex. allele|allele:genotype quality)
 
 MAF??
 
