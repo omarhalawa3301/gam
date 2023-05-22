@@ -33,6 +33,14 @@ REF and ALT are reference and alternative alleles,
 FILTER will say PASS if this snp meets all of the requirements and will have an id which tells us how it is disqualified from the analysis
 FORMAT is the format of each sample for that snp (ex. allele|allele:genotype quality)
 
+From the format of the vcf, we can take the genotypes of all the samples for every snp and put it into a dataframe/numpy array:  
+sample1, 2, 3
+0|0 0|1 0|1 snp  
+0|0 0|1 0|1 snp  
+0|0 0|1 0|1 snp  
+
+And then from the phenotype file, we can add the value of the phenotype at the end of the columns? 
+
 MAF??
 
 Take in vcf file via:
