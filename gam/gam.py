@@ -62,6 +62,15 @@ parser.add_argument("-p", "--phenotype", help="phenotype data filename"
 parser.add_argument("-o", "--out", help="path to output results file",
                     nargs="?", const=1)
 
+# Option of using simple linear regression 
+parser.add_argument("-l", "--linear", help="do GWAS using linear regression", nargs="?", required=False)
+
+# Option of using an ensemble of linear regression models
+parser.add_argument("-le", "--linear-ensemble", help="do GWAS using an ensemble of linear models", nargs="?", required=False)
+
+# Option of using boosted decision trees (sklearn.ensemble.Adaboost)
+parser.add_argument("-bdt", "--boosted", help="do GWAS using boosted decision trees", nargs="?", required=False)
+
 
 # Parsing arguments for future calls within script to utilize
 args = parser.parse_args()
