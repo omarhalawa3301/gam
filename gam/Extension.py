@@ -6,7 +6,9 @@
     File name:     Extension.py
     Project:       GAM (GWAS with Advanced Machine-learning) - CSE 185 Project
     Repository:    https://github.com/omarhalawa3301/gam
-    Description:   GAM constant extension string python-containing script                   
+    Description:   GAM constant extension string python-containing script.
+                   Purpose for this file is to allow future file format 
+                   implementation for both genotype and phenotype data inputs.
     References:    https://www.cog-genomics.org/plink/1.9/assoc#linear
 """
 
