@@ -60,9 +60,10 @@ parser.add_argument("-p", "--phenotype", help="phenotype data filename"
 
 # Optional arguments for result file's output directory and  
 # Assigning result file's name (.assoc.linear) (optional, has default value):
-parser.add_argument("-o", "--out", help="path to output results file",
-                    nargs="?", const=1)
+# TODO: check format of const and nargs
+parser.add_argument("-o", "--out", help="path to output results file", nargs="?", const=1, required=False)
 
+#TODO: Review how to run, should the user explicitly add one of these 3 flags, or will one of them be a default? (not sure about implications when in the form of CLI tool)
 # Option of using simple linear regression 
 parser.add_argument("-l", "--linear", help="do GWAS using linear regression", action='store_true', required=False)
 
@@ -88,9 +89,4 @@ if (args.linear):
     # geno_df = process(args.genotype, geno_file)
     pheno_df = process(args.phenotype, pheno_file)
     
-
-# with gzip.open(input_file, 'rb') as f_in
-
-
-# if __name__ == "__main"
 
