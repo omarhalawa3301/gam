@@ -8,7 +8,7 @@
     Repository:    https://github.com/omarhalawa3301/gam
     Description:   GAM constant extension string python-containing script.
                    Purpose for this file is to allow future file format 
-                   implementation for both genotype and phenotype data inputs.
+                   implementation for both genotype & phenotype data inputs.
     References:    https://www.cog-genomics.org/plink/1.9/assoc#linear
 """
 
