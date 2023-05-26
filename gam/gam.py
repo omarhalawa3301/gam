@@ -1,8 +1,9 @@
 # Importing modules
-import gzip
-import vcf
 import pandas as pd
 import argparse as ap
+
+# Importing genotype and phenotype string markers (more to implement for later)
+from Marker import *
 
 # Importing file processing functions
 from gam_utils import *
@@ -35,7 +36,6 @@ from gam_utils import *
                     - Perform GWAS (linear-regression based) by:
                       1. Creating linear-regression models of each SNP
                       2. 
-                    - Predict feature dataset and compare to "true" target file
                    Outputs an .assoc.linear file.
                    Also outputs a Manhattan plot visualization.
                    Designed to allow for further file type implementation.
@@ -57,30 +57,40 @@ parser.add_argument("-g", "--genotype", help="genotype data filename"
 parser.add_argument("-p", "--phenotype", help="phenotype data filename"
                     + " Valid file format(s): .phen", required=True)
 
+
 # Optional arguments for result file's output directory and  
 # Assigning result file's name (.assoc.linear) (optional, has default value):
 parser.add_argument("-o", "--out", help="path to output results file",
                     nargs="?", const=1)
 
 # Option of using simple linear regression 
-parser.add_argument("-l", "--linear", help="do GWAS using linear regression", nargs="?", required=False)
+parser.add_argument("-l", "--linear", help="do GWAS using linear regression", action='store_true', required=False)
 
 # Option of using an ensemble of linear regression models
-parser.add_argument("-le", "--linear-ensemble", help="do GWAS using an ensemble of linear models", nargs="?", required=False)
+parser.add_argument("--le", "--linear-ensemble", help="do GWAS using an ensemble of linear models", action='store_true', required=False)
 
 # Option of using boosted decision trees (sklearn.ensemble.Adaboost)
-parser.add_argument("-bdt", "--boosted", help="do GWAS using boosted decision trees", nargs="?", required=False)
+parser.add_argument("--bdt", "--boosted", help="do GWAS using boosted decision trees", action='store_true', required=False)
+
+# Option of specifying MAF (minor allele frequency) by which to filter out SNPs where the 
+parser.add_argument("-m", "--maf", help="assign ", action='store_true', required=False)
 
 
 # Parsing arguments for future calls within script to utilize
 args = parser.parse_args()
 
-
 geno_file = file_valid(args.genotype, "GENOTYPE")
 pheno_file = file_valid(args.phenotype, "PHENOTYPE")
 
-with gzip.open(input_file, 'rb') as f_in
+# Performing "normal" linear regression
+if (args.linear):
+    # Obtain pandas data frames from process function
+    geno_df = process(args.genotype, geno_file)
+    # pheno_df = process(args.phenotype, pheno_file)
+    
+
+# with gzip.open(input_file, 'rb') as f_in
 
 
-
+# if __name__ == "__main"
 

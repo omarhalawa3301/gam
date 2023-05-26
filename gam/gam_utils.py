@@ -1,5 +1,11 @@
 # Importing modules
 from os.path import exists
+import pandas as pd
+from cyvcf2 import VCF
+
+# Importing constant marker and extension strings
+from Marker import *
+from Extension import *
 
 """
     Name:          Pei Ting Chua Chai, Omar Halawa
@@ -47,11 +53,11 @@ def file_valid(name, marker):
     # Only two cases possible, calls are within program
     
     # Feature data file case
-    if (marker == Marker.FEAT):
-        curr_list = Extension.FEAT_EXT
+    if (marker == Marker.GT):
+        curr_list = Extension.GT_EXT
     # Target data file case
-    elif (marker == Marker.TAR):
-        curr_list = Extension.TAR_EXT
+    elif (marker == Marker.PT):
+        curr_list = Extension.PT_EXT
 
     # Carrying out the extension check logic using the now-updated curr_list
     for ext in curr_list:
@@ -71,7 +77,7 @@ def file_valid(name, marker):
         # Invalid file name message
         if (not valid_name):
             print("File name '" + name + 
-                "' is invalid (not found in current directory).")
+                "' is invalid (not found from current directory).")
         # Invalid file extension message
         if (not valid_ext):
             # Note: Future file type implementation must list all valid
@@ -83,4 +89,49 @@ def file_valid(name, marker):
         print()
         # Returning None in the case of invalid file name
         return None
+
+
+def process(name, ext):
+    """ Function that processes valid file given its extension as an argument
+
+    Arguments:
+        name:   name of file to process
+        ext:    extension of file to process (obtained from file_valid call)
+    Returns:    returns a call to the appropriate helper function that contains
+                actual logic for processing
+    """
+
+    if (ext == Extension.VCF_GZ_EXT):
+        return gene_process(name, ext)
+    if (ext == Extension.VCF_EXT):
+        return gene_process(name, ext)
+    elif (ext == Extension.PHENE_EXT):
+        return phene_process(name)
+
+
+def gene_process(name, ext):
+
+    for variant in VCF(name): # or VCF('some.bcf')
+
+        print(variant.ALT) # worst case scenario, process if 0,1,or 2 via variant.gt_bases
+        print("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+    
+        # variant.REF, variant.ALT # e.g. REF='A', ALT=['C', 'T']
+        
+        # variant.CHROM, variant.start, variant.end, variant.ID, \
+        #             variant.FILTER, variant.QUAL
+
+        # # numpy arrays of specific things we pull from the sample fields.
+        # # gt_types is array of 0,1,2,3==HOM_REF, HET, UNKNOWN, HOM_ALT
+        # variant.gt_types, variant.gt_ref_depths, variant.gt_alt_depths # numpy arrays
+        # variant.gt_phases, variant.gt_quals, variant.gt_bases # numpy array
+
+    return df
+
+
+# def phene_process(name):
+
+#     phene_file = pd.read_csv(name, skiprows = 2, sep = '\s+')
+
+#     display(phene_file)
 
