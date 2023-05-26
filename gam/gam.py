@@ -72,8 +72,8 @@ parser.add_argument("--le", "--linear-ensemble", help="do GWAS using an ensemble
 # Option of using boosted decision trees (sklearn.ensemble.Adaboost)
 parser.add_argument("--bdt", "--boosted", help="do GWAS using boosted decision trees", action='store_true', required=False)
 
-# Option of specifying MAF (minor allele frequency) by which to filter out SNPs where the 
-parser.add_argument("-m", "--maf", help="assign ", action='store_true', required=False)
+# Option of specifying MAF (minor allele frequency) by which to filter out SNPs where the
+parser.add_argument("-m", "--maf", help="assign minor allele frequency for filtration", action='store_true', required=False)
 
 
 # Parsing arguments for future calls within script to utilize
