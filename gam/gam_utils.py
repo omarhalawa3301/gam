@@ -115,20 +115,26 @@ def gene_process(name, ext):
         ext:    extension of file to process (obtained from file_valid call)
     Returns:    dataframe of rows=sample and cols=snps with value of genotype (0=homo ref, 1=hetero, 2=homo alt) 
     """
-    for variant in VCF(name): # or VCF('some.bcf')
-
-        print(variant.ALT) # worst case scenario, process if 0,1,or 2 via variant.gt_bases
-        print("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
     
-        # variant.REF, variant.ALT # e.g. REF='A', ALT=['C', 'T']
-        
-        # variant.CHROM, variant.start, variant.end, variant.ID, \
-        #             variant.FILTER, variant.QUAL
+    # Genotype file processing for vcf.gz file format
+    if (ext == Extension.VCF_GZ_EXT):
+        for variant in VCF(name): # or VCF('some.bcf')
 
-        # # numpy arrays of specific things we pull from the sample fields.
-        # # gt_types is array of 0,1,2,3==HOM_REF, HET, UNKNOWN, HOM_ALT
-        # variant.gt_types, variant.gt_ref_depths, variant.gt_alt_depths # numpy arrays
-        # variant.gt_phases, variant.gt_quals, variant.gt_bases # numpy array
+            print(variant.ALT) # worst case scenario, process if 0,1,or 2 via variant.gt_bases
+            print("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+
+            # TODO: Figure out what the fuck we want to do when there are multiple alternate alleles
+            # TODO: When this ^ is done, transform data into pandas df for further processing in pipeline
+
+            # variant.REF, variant.ALT # e.g. REF='A', ALT=['C', 'T']
+
+            # variant.CHROM, variant.start, variant.end, variant.ID, \
+            #             variant.FILTER, variant.QUAL
+
+            # # numpy arrays of specific things we pull from the sample fields.
+            # # gt_types is array of 0,1,2,3==HOM_REF, HET, UNKNOWN, HOM_ALT
+            # variant.gt_types, variant.gt_ref_depths, variant.gt_alt_depths # numpy arrays
+            # variant.gt_phases, variant.gt_quals, variant.gt_bases # numpy array
 
     # return df
 
