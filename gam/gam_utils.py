@@ -103,14 +103,18 @@ def process(name, ext):
 
     if (ext == Extension.VCF_GZ_EXT):
         return gene_process(name, ext)
-    if (ext == Extension.VCF_EXT):
-        return gene_process(name, ext)
     elif (ext == Extension.PHENE_EXT):
         return phene_process(name)
 
 
 def gene_process(name, ext):
+    """ Function that processes valid file given its name and extension as an argument
 
+    Arguments:
+        name:   name of file to process
+        ext:    extension of file to process (obtained from file_valid call)
+    Returns:    dataframe of rows=sample and cols=snps with value of genotype (0=homo ref, 1=hetero, 2=homo alt) 
+    """
     for variant in VCF(name): # or VCF('some.bcf')
 
         print(variant.ALT) # worst case scenario, process if 0,1,or 2 via variant.gt_bases
@@ -126,12 +130,20 @@ def gene_process(name, ext):
         # variant.gt_types, variant.gt_ref_depths, variant.gt_alt_depths # numpy arrays
         # variant.gt_phases, variant.gt_quals, variant.gt_bases # numpy array
 
+    # return df
+
+
+def phene_process(name):
+    """ Function that processes a phenotype file into a dataframe
+
+    Arguments:
+        name:   name of file to process
+    Returns:    dataframe of sample vs corresponding phenotype value
+    """
+    # Assumes that the phenotype file has two columns of sample names to skip
+    df = pd.read_csv(name, usecols=[1,2], sep = '\s+', header=None)
+
+    df.columns = ["Sample","Phenotype"]
+
     return df
-
-
-# def phene_process(name):
-
-#     phene_file = pd.read_csv(name, skiprows = 2, sep = '\s+')
-
-#     display(phene_file)
 

@@ -85,8 +85,8 @@ pheno_file = file_valid(args.phenotype, "PHENOTYPE")
 # Performing "normal" linear regression
 if (args.linear):
     # Obtain pandas data frames from process function
-    geno_df = process(args.genotype, geno_file)
-    # pheno_df = process(args.phenotype, pheno_file)
+    # geno_df = process(args.genotype, geno_file)
+    pheno_df = process(args.phenotype, pheno_file)
     
 
 # with gzip.open(input_file, 'rb') as f_in
