@@ -4,8 +4,8 @@ import pandas as pd
 from cyvcf2 import VCF
 
 # Importing constant marker and extension strings
-from Marker import *
-from Extension import *
+from .Marker import *
+from .Extension import *
 
 """
     Name:          Pei Ting Chua Chai, Omar Halawa
@@ -121,9 +121,8 @@ def gene_process(name, ext):
         for variant in VCF(name): # or VCF('some.bcf')
 
             print(variant.ALT) # worst case scenario, process if 0,1,or 2 via variant.gt_bases
-            print("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
 
-            # TODO: Figure out what the fuck we want to do when there are multiple alternate alleles
+            # TODO: Figure out what we want to do when there are multiple alternate alleles
             # TODO: When this ^ is done, transform data into pandas df for further processing in pipeline
 
             # variant.REF, variant.ALT # e.g. REF='A', ALT=['C', 'T']

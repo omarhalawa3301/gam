@@ -1,0 +1,14 @@
+README.md
+setup.py
+gam/Extension.py
+gam/Marker.py
+gam/__init__.py
+gam/gam.py
+gam/gam_utils.py
+gam/test_myutils.py
+gam/version.py
+gam.egg-info/PKG-INFO
+gam.egg-info/SOURCES.txt
+gam.egg-info/dependency_links.txt
+gam.egg-info/entry_points.txt
+gam.egg-info/top_level.txt
