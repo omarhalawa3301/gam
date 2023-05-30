@@ -9,9 +9,12 @@
 　　'　　　 1 Impostor remains 　 　　。
 
 　　ﾟ　　　.　　　. ,　　　　.　 .
+  
+  Note to reviewer (yes, you!): We are currently still ironing out the kinks of our tool's implementation, so we would really appreciate it if you could do your review later in the week (we are working toward finishing by Thursday at the very latest). We promise you it will not take too long to run if you simply follow the instructions in this README.md, and we will be updating this note with an estimated time of installing the tool and running it on example data so that you can rest assured. Thank you ඞ
 
 
-# GAM (CSE185 Project)
+# GAM (GWAS with Advanced Machine-learning)
+_If you didn't want who I GWAS, you don't deserve who I **GAM**..._
 
 This is Pei Ting Chua Chai and Omar Halawa's CSE185 project. It implements a subset of the the "--linear" GWAS method available through plink. See the [plink --linear](https://www.cog-genomics.org/plink/1.9/assoc#linear) page for more details.
 
