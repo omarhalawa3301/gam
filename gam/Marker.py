@@ -11,7 +11,10 @@
 """
 
 
-# Initializing Marker class and its variables for file_valid argument marker
+# Initializing Marker class and its variables for file_valid argument markers and constants
 class Marker:
     GT = "GENOTYPE"
     PT = "PHENOTYPE"
+    NA = 0
+    P_STD = 0.05
+    ADDITIVE = "ADD"

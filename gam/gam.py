@@ -1,15 +1,24 @@
 # Importing modules
 import pandas as pd
 import argparse as ap
+import time
+from scipy import stats
+import matplotlib.pyplot as plt
+from qqman import qqman
 
 # Importing file processing functions
 from .gam_utils import *
+# from gam_utils import *
 
 # Importing genotype and phenotype string markers (more to implement for later)
 from .Marker import *
+# from Marker import *
 
 # Importing version
 from gam import __version__
+
+start = time.time()
+
 
 #   __  __      __      __      _____         __      __  ______   _____     _____   _____    ____    _   _ 
 #  |  \/  |     \ \    / /     |  __ \        \ \    / / |  ____| |  __ \   / ____| |_   _|  / __ \  | \ | |
@@ -99,31 +108,70 @@ def main():
     # Option of specifying MAF (minor allele frequency) by which to filter out SNPs that have a minor allele frequency less than specified
     parser.add_argument("-m", "--maf", help="assign minor allele frequency for filtration", nargs="?", type=restricted_float, required=False)
 
+    # TODO: Covariate implementation
 
     # Parsing arguments for future calls within script to utilize
     args = parser.parse_args()
 
-
-    geno_file = file_valid(args.genotype, Marker.GT)
     pheno_file = file_valid(args.phenotype, Marker.PT)
+    geno_file = file_valid(args.genotype, Marker.GT)
 
-    # Obtain pandas data frames from process function
-    geno_df = process(args.genotype, geno_file)
-    pheno_df = process(args.phenotype, pheno_file)
+    # Obtain pandas data frames from process function (number of samples only matters for genotype file processing)
+    pheno_df = process(args.phenotype, pheno_file, Marker.NA)
+    geno_df = process(args.genotype, geno_file, len(pheno_df.index))
 
     # GWAS mode check:
     # Performing "normal" linear regression
     if (args.linear):
-        # TODO: Write the process for linear GWAS
+
+        # Genotype df looks as follows:
+        #              SAMPLE1 SAMPLE2 SAMPLE3 . . .
+        #        SNP1    0        0       1
+        #        SNP2    2        2       1
+        #        SNP3    1        1       0
+        #          .
+        #          .
+        #          .  
+
+        # Phenotype df looks as follows:
+        #   
+        #        SAMPLE1   1.642
+        #        SAMPLE2   -0.132
+        #
+
+        # p-values to retain from linear regression for Manhattan plot
+        pvals = []
+
+        # Iterating through each biallelic SNP that we have taken in
+        for snp in range(0, len(geno_df.index)):
+
+            # Genotype values for a specific SNP among samples (0, 1, or 2)
+            X_vals = geno_df.iloc[snp]
+
+            y_vals = pheno_df["Phenotype"]
+
+            # SCIPY
+            slope, intercept, r_value, p_value, std_err = stats.linregress(X_vals.values, y_vals.values)
+
+            pvals.append(p_value)
+            
+        # Bonferroni Correction: adjust the given p-value threshold by number of tests (SNPs)
+        sig_thresh = Marker.P_STD / len(geno_df.index)
+        print("GWAS Bonferroni-Corrected P Value: ", sig_thresh)
+
         return
-    # Else , performing
-    elif (args.linear_ensemble):
-        # TODO: Write the process for linear ensemble GWAS
-        return
-    elif (args.boosted):
-        # TODO: Write the process for boosted decision trees GWAS
-        return
+    
+    # # Else , performing
+    # elif (args.linear_ensemble):
+    #     # TODO: Write the process for linear ensemble GWAS
+    #     return
+    # elif (args.boosted):
+    #     # TODO: Write the process for boosted decision trees GWAS
+    #     return
         
 
 if __name__ == "__main__":
     main()
+
+end = time.time()
+print(end - start)
