@@ -9,9 +9,6 @@ from qqman import qqman
 # Importing constant marker and extension strings
 from .Marker import *
 from .Extension import *
-# from Marker import *
-# from Extension import *
-
 
 """
     Name:          Pei Ting Chua Chai, Omar Halawa
@@ -144,7 +141,7 @@ def filter_alts(ref, arr):
 
     curr_max = max(counts, key=counts.get)
 
-    if (curr_max == ref and len(counts.items()) == 1):
+    if (len(counts.items()) == 1):
         # we ignore this SNP as it only has one allele for every sample
         return -1
     elif (curr_max == ref):

@@ -12,6 +12,8 @@
   
   Note to reviewer (yes, you!): We are currently still ironing out the kinks of our tool's implementation, so we would really appreciate it if you could do your review later in the week (we are working toward finishing by Thursday at the very latest). We promise you it will not take too long to run if you simply follow the instructions in this README.md, and we will be updating this note with an estimated time of installing the tool and running it on example data so that you can rest assured. Thank you ඞ
 
+  Update to note: installation should be seamless, and running on the **small dataset should take no time at all.** If you wish to run on the much larger, **genome-wide dataset, it should take around 22 minutes** to do all the processing and generate the visuals (which match plink's outputs exactly for the currently-implemented `-l` option) as there is no multithreading implemented yet.
+
 
 # GAM (GWAS with Advanced Machine-learning)
 _If you didn't want who I GWAS, you don't deserve who I **GAM**..._
@@ -20,28 +22,19 @@ This is Pei Ting Chua Chai and Omar Halawa's CSE185 project. It implements a sub
 
 # Install instructions
 
-Installation requires the [`pandas`](https://pandas.pydata.org/), [`cyvcf2`](https://brentp.github.io/cyvcf2/), [`numpy`](https://numpy.org/) libraries to be installed. You can install these with `pip install` or `conda install`:
+Installation requires the [`pandas`](https://pandas.pydata.org/), [`cyvcf2`](https://brentp.github.io/cyvcf2/), [`scipy`](https://docs.scipy.org/doc/scipy/), [`matplotlib`](https://matplotlib.org/), and [`qqman`](https://pypi.org/project/qqman/) libraries to be installed. You can install these with `pip install` or `conda install`:
 
-_**Important Note:**_ You _may_ experience some issues with installing `cyvcf2` via pip due to versioning discrepancies. As a result, it is recommended you install it via conda.
+_**Important Note:**_ You _may_ experience some issues with installing `cyvcf2` via pip due to versioning discrepancies. As a result, it is recommended you install this one package via conda.
 
-TODO: Update the packages
 ```
-pip install pandas cyvcf2 
+pip install pandas scipy matplotlib qqman
 conda install cyvcf2
 ```
 
 Once required libraries are installed, you can install `gam` with the following command:
 
-TODO: Best to tell users to do it with --user by default
 ```
-python setup.py install
-```
-
-Note: if you do not have root access, you can run the commands above with additional options to install locally:
-```
-pip install --user pandas numpy
-conda install -p ~/.local cyvcf2
-python setup.py install --user
+python setup.py install --user --prefix=$HOME
 ```
 
 If the install was successful, typing `gam --help` should show a useful message.
@@ -54,20 +47,33 @@ The basic usage of `gam` is (uses the `--linear` option, one of the 3 available 
 gam -l -g genotype.vcf.gz -p phenotype.phen
 ```
 
-To run `gam` on a small test example (using files in this repo):
+To run `gam` on a **small** test example (using files in this repo) (this run should not take more than 1 second):
 ```
-TODO: gam -g example-files/test.vcf.gz -p example-files/test.phen
+gam -l -g example-files/test.vcf.gz -p example-files/test.phen
 ```
+You should then be the output assoc.linear results file and plot png file under the _example-files_ directory (there are references under the _example-files/ref_results_ and _example-files/ref_visuals_ directories)
 
-This should produce the following Manhattan plot below:
+This **small test** should produce the following Manhattan plot and qqplot below:
+![title](example-files/ref_visuals/test_qqplot.png "Small Test Plots")  
+
+
+To run `gam` on a **large** test example (using files in this repo) (should take ~22 minutes for this run as it contains 900,000 SNPs and 207 samples, no multithreading implemented yet):
 ```
-TODO:
+gam -l -g example-files/lab3_gwas.vcf.gz -p example-files/lab3_gwas.phen
 ```
+Similarly to the small test run, outputs should be under the _example-files_ directory (references also found in sub-directories for cross-checking)
+
+This test should produce the following Manhattan plot and qqplot below:
+![title](example-files/ref_visuals/lab3_gwas_qqplot.png "Genome-Wide Test Plots")  
+
+
+
 
 To compare to output of `plink --linear`, run:
 ```
 TODO:
 ```
+Outputs are identical for the `gam -l` option run
 
 # gam options
 
@@ -84,10 +90,10 @@ The only required inputs to `gam` are
 
 
 Users may additionally specify the options below:
+TODO:
+<!-- * `-m FLOAT`, `--maf FLOAT`: float representing minor allele frequency. If specified, the script will perform further filtration on the dataset provided by excluding SNPs whose MAF values lie below the assigned threshold. 
 
-* `-m FLOAT`, `--maf FLOAT`: float representing minor allele frequency. If specified, the script will perform further filtration on the dataset provided by excluding SNPs whose MAF values lie below the assigned threshold. 
-
-* `-o FILE`, `--out FILE`: path to output result file(s). By default, the path is the current working directory.
+* `-o FILE`, `--out FILE`: path to output result file(s). By default, the path is the current working directory. -->
 
 
 # File format
@@ -100,15 +106,17 @@ This repository was generated by Pei Ting Chua Chai and Omar Halawa, with inspir
 
 Please submit a pull request with any corrections or suggestions.
 
-# Testing (work-in-progress)
+# Automated Testing (work-in-progress)
 
 To run tests:
 ```
 # Run command line tests
-TODO: sh tests/cmdline_tests.sh
+TODO: 
+<!-- sh tests/cmdline_tests.sh -->
 
 # Run unit tests
-TODO: python -m pytest --cov=.
+TODO: 
+<!-- python -m pytest --cov=. -->
 ```
 
 
