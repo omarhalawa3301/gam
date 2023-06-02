@@ -5,15 +5,13 @@ import time
 from scipy import stats
 
 # Importing file processing functions
-# from .gam_utils import *
-from gam_utils import *
+from .gam_utils import *
 
 # Importing genotype and phenotype string markers (more to implement for later)
-# from .Marker import *
-from Marker import *
+from .Marker import *
 
 # Importing version
-# from gam import __version__
+from gam import __version__
 
 start = time.time()
 

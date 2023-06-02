@@ -3,6 +3,8 @@ from os.path import exists
 import pandas as pd
 import gzip
 from cyvcf2 import VCF
+import matplotlib.pyplot as plt
+from qqman import qqman
 
 # Importing constant marker and extension strings
 from .Marker import *
@@ -272,3 +274,43 @@ def phene_process(name):
     df = df.reindex(sorted(df.columns), axis=1)
 
     return df
+
+
+def assoc_result(chrs, snp_ids, bps, alts, test_labels, nmiss, beta, t_stat, pvals, filename):
+    """ Function that creates and outputs the result assoc.linear file to the specified output directory 
+    Arguments:
+        chrs:        array of chromosome numbers
+        snp_ids:     array of SNP ids
+        bps:         array of SNP positions on chromosomes by base pairs
+        alts:        array of each SNP's alternative allele
+        test_labels: array of correlated found in data, is additive by default
+        nmiss:       array of number of samples used for each SNP's linear regression model
+        beta:        array of slopes for each SNP's linear regression model
+        t_stat:      array of t-statistic for each SNP's linear regression model (is slope/slope_std_err)
+        pvals:       array of p-values for each SNP's linear regression model, p-value of line's slope being 0 
+        filename:    name of file with the output directory included, user can only adjust the output directory, is . by default
+    Returns:    Does not return anything
+    """
+
+    f = open(filename, "w")
+
+    f.write("CHR\tSNP\tBP\tA1\tTEST\tNMISS\tBETA\tSTAT\tP\n")
+
+    for i in range(0,len(snp_ids)):
+        f.write(chrs[i] + "\t" + snp_ids[i]+ "\t" + bps[i]+ "\t" + alts[i]+ "\t" + test_labels[i]
+                + "\t" + nmiss[i]+ "\t" + beta[i]+ "\t" + t_stat[i]+ "\t" + pvals[i]+ "\n")
+
+
+def plot(in_name, out_name):
+    """ Function that plots a Manhattan plot and a qqplot plot of the data 
+
+    Arguments:
+        in_name:    Name of assoc.linear result file to obtain data from
+        out_name:   Name to use as prefix for manhattan and qqplot png files
+    Returns:        Does not return anything
+    """
+    data = pd.read_csv(in_name, delim_whitespace=True)
+    fig, (ax0, ax1) = plt.subplots(1, 2, gridspec_kw={'width_ratios': [2, 1]})
+    fig.set_size_inches((15, 5))
+    qqman.manhattan(data, ax=ax0)
+    qqman.qqplot(data, ax=ax1, out=out_name+"_qqplot.png")
