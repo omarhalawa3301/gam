@@ -3,19 +3,17 @@ import pandas as pd
 import argparse as ap
 import time
 from scipy import stats
-import matplotlib.pyplot as plt
-from qqman import qqman
 
 # Importing file processing functions
-from .gam_utils import *
-# from gam_utils import *
+# from .gam_utils import *
+from gam_utils import *
 
 # Importing genotype and phenotype string markers (more to implement for later)
-from .Marker import *
-# from Marker import *
+# from .Marker import *
+from Marker import *
 
 # Importing version
-from gam import __version__
+# from gam import __version__
 
 start = time.time()
 
@@ -113,12 +111,18 @@ def main():
     # Parsing arguments for future calls within script to utilize
     args = parser.parse_args()
 
-    pheno_file = file_valid(args.phenotype, Marker.PT)
-    geno_file = file_valid(args.genotype, Marker.GT)
+    pheno_ext = file_valid(args.phenotype, Marker.PT)
+    geno_ext = file_valid(args.genotype, Marker.GT)
 
     # Obtain pandas data frames from process function (number of samples only matters for genotype file processing)
-    pheno_df = process(args.phenotype, pheno_file, Marker.NA)
-    geno_df = process(args.genotype, geno_file, len(pheno_df.index))
+    # Also obtaining number of samples and snps for further data processing in pipeline 
+    pheno_df = process(args.phenotype, pheno_ext, Marker.NA)
+    num_samples = len(pheno_df.index)
+    geno_df = process(args.genotype, geno_ext, num_samples)
+    num_snps = len(geno_df.index)
+
+    # Initializing basename for outputting visuals and 
+    basename = args.genotype.replace(geno_ext,"")
 
     # GWAS mode check:
     # Performing "normal" linear regression
@@ -137,29 +141,43 @@ def main():
         #   
         #        SAMPLE1   1.642
         #        SAMPLE2   -0.132
-        #
+        #           .
+        #           .
+        #           .
 
-        # p-values to retain from linear regression for Manhattan plot
-        pvals = []
+        # values to retain from linear regression for plotting
+        chrs, snp_ids, bps, alts, test_labels, nmiss, beta, t_stat, pvals = ([] for i in range(Marker.ASSOC_COLS))
 
         # Iterating through each biallelic SNP that we have taken in
-        for snp in range(0, len(geno_df.index)):
+        for snp in range(0, num_snps):
 
             # Genotype values for a specific SNP among samples (0, 1, or 2)
-            X_vals = geno_df.iloc[snp]
+            X = geno_df.iloc[snp].values
 
-            y_vals = pheno_df["Phenotype"]
+            # Phenotype values for a specific SNP among samples 
+            y = pheno_df["Phenotype"].values
 
-            # SCIPY
-            slope, intercept, r_value, p_value, std_err = stats.linregress(X_vals.values, y_vals.values)
+            # SCIPY linear regression model for SNP
+            slope, intercept, r_value, p_value, std_err = stats.linregress(X, y)
 
-            pvals.append(p_value)
+            # Filtering data needed for assoc.linear output file
+            chrs.append(str(geno_df.index[snp][0]))
+            bps.append(str(geno_df.index[snp][1]))
+            snp_ids.append(str(geno_df.index[snp][2]))
+            alts.append(str(geno_df.index[snp][3]))
+            test_labels.append("ADD")
+            nmiss.append(str(num_samples))
+            beta.append(str(slope))
+            t_stat.append(str(slope/std_err))
+            pvals.append(str(p_value))
             
         # Bonferroni Correction: adjust the given p-value threshold by number of tests (SNPs)
         sig_thresh = Marker.P_STD / len(geno_df.index)
-        print("GWAS Bonferroni-Corrected P Value: ", sig_thresh)
+        print("GWAS Bonferroni-Corrected P-Value: ", sig_thresh)
 
-        return
+        # Obtaining output assoc.linear filename and creating it
+        assoc_filename = basename+".assoc.linear"
+        assoc_result(chrs, snp_ids, bps, alts, test_labels, nmiss, beta, t_stat, pvals, assoc_filename)
     
     # # Else , performing
     # elif (args.linear_ensemble):
@@ -168,10 +186,14 @@ def main():
     # elif (args.boosted):
     #     # TODO: Write the process for boosted decision trees GWAS
     #     return
+
+    # Plotting visualizations (Manhattan and qqplot)
+    # Uses genotype file's basename for plot graphs
+    plot(assoc_filename, basename)
         
 
 if __name__ == "__main__":
     main()
 
 end = time.time()
-print(end - start)
+print("Total runtime:", end - start, "seconds")

@@ -22,16 +22,17 @@ This is Pei Ting Chua Chai and Omar Halawa's CSE185 project. It implements a sub
 
 Installation requires the [`pandas`](https://pandas.pydata.org/), [`cyvcf2`](https://brentp.github.io/cyvcf2/), [`numpy`](https://numpy.org/) libraries to be installed. You can install these with `pip install` or `conda install`:
 
-_**Important Note:**_ You  may experience some issues with installing `cyvcf2` via pip due to versioning discrepancies. As a result, it is _highly recommended_ you install it via conda.
+_**Important Note:**_ You _may_ experience some issues with installing `cyvcf2` via pip due to versioning discrepancies. As a result, it is recommended you install it via conda.
 
+TODO: Update the packages
 ```
-pip install pandas
-pip install numpy
+pip install pandas cyvcf2 
 conda install cyvcf2
 ```
 
 Once required libraries are installed, you can install `gam` with the following command:
 
+TODO: Best to tell users to do it with --user by default
 ```
 python setup.py install
 ```

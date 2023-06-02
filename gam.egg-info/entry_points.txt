@@ -1,2 +1,3 @@
 [console_scripts]
 gam = gam.gam:main
+
