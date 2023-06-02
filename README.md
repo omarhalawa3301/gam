@@ -12,8 +12,11 @@
   
   Note to reviewer (yes, you!): We are currently still ironing out the kinks of our tool's implementation, so we would really appreciate it if you could do your review later in the week (we are working toward finishing by Thursday at the very latest). We promise you it will not take too long to run if you simply follow the instructions in this README.md, and we will be updating this note with an estimated time of installing the tool and running it on example data so that you can rest assured. Thank you ඞ
 
+<br> 
+
   Update to note: installation should be seamless, and running on the **small dataset should take no time at all.** If you wish to run on the much larger, **genome-wide dataset, it should take around 22 minutes** to do all the processing and generate the visuals (which match plink's outputs exactly for the currently-implemented `-l` option) as there is no multithreading implemented yet.
 
+<br> 
 
 # GAM (GWAS with Advanced Machine-learning)
 _If you didn't want who I GWAS, you don't deserve who I **GAM**..._
@@ -22,19 +25,19 @@ This is Pei Ting Chua Chai and Omar Halawa's CSE185 project. It implements a sub
 
 # Install instructions
 
-Installation requires the [`pandas`](https://pandas.pydata.org/), [`cyvcf2`](https://brentp.github.io/cyvcf2/), [`scipy`](https://docs.scipy.org/doc/scipy/), [`matplotlib`](https://matplotlib.org/), and [`qqman`](https://pypi.org/project/qqman/) libraries to be installed. You can install these with `pip install` or `conda install`:
+Installation requires the [`pandas`](https://pandas.pydata.org/), [`cyvcf2`](https://brentp.github.io/cyvcf2/), [`scipy`](https://docs.scipy.org/doc/scipy/), [`matplotlib`](https://matplotlib.org/), [`qqman`](https://pypi.org/project/qqman/), [`art`](https://pypi.org/project/art/) libraries to be installed. You can install these with `pip install` or `conda install`:
 
 _**Important Note:**_ You _may_ experience some issues with installing `cyvcf2` via pip due to versioning discrepancies. As a result, it is recommended you install this one package via conda.
 
 ```
-pip install pandas scipy matplotlib qqman
+pip install pandas scipy matplotlib qqman art
 conda install cyvcf2
 ```
 
 Once required libraries are installed, you can install `gam` with the following command:
 
 ```
-python setup.py install --user --prefix=$HOME
+python setup.py install --user
 ```
 
 If the install was successful, typing `gam --help` should show a useful message.

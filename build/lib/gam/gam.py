@@ -2,19 +2,21 @@
 import pandas as pd
 import argparse as ap
 import time
+from art import *
 from scipy import stats
 
 # Importing file processing functions
 from .gam_utils import *
-
 # Importing genotype and phenotype string markers (more to implement for later)
 from .Marker import *
-
 # Importing version
 from gam import __version__
 
 start = time.time()
 
+tprint("GAM", "isometric1")
+catchphrase = text2art("If you didn't want who I GWAS, you don't deserve who I GAM...", font="subscript2") + " " + art("do you even lift bro") + "!!!"
+print(catchphrase)
 
 #   __  __      __      __      _____         __      __  ______   _____     _____   _____    ____    _   _ 
 #  |  \/  |     \ \    / /     |  __ \        \ \    / / |  ____| |  __ \   / ____| |_   _|  / __ \  | \ | |
@@ -84,9 +86,9 @@ def main():
 
 
     # Optional arguments for result file's output directory and  
-    # Assigning result file's name (.assoc.linear) (optional, has default value):
-    parser.add_argument("-o", "--out", help="path to output results file", 
-                        nargs="?", default=".", type=str, required=False)
+    # # Assigning result file's name (.assoc.linear) (optional, has default value):
+    # parser.add_argument("-o", "--out", help="path to output results file", 
+    #                     nargs="?", default=".", type=str, required=False)
 
     # Assigning parameters to the three possible modes of running GWAS
     modes = parser.add_mutually_exclusive_group(required=True)
@@ -101,8 +103,8 @@ def main():
     modes.add_argument("--bdt", "--boosted", help="do GWAS using boosted decision trees", action='store_true', required=False)
 
 
-    # Option of specifying MAF (minor allele frequency) by which to filter out SNPs that have a minor allele frequency less than specified
-    parser.add_argument("-m", "--maf", help="assign minor allele frequency for filtration", nargs="?", type=restricted_float, required=False)
+    # # Option of specifying MAF (minor allele frequency) by which to filter out SNPs that have a minor allele frequency less than specified
+    # parser.add_argument("-m", "--maf", help="assign minor allele frequency for filtration", nargs="?", type=restricted_float, required=False)
 
     # TODO: Covariate implementation
 
@@ -171,7 +173,6 @@ def main():
             
         # Bonferroni Correction: adjust the given p-value threshold by number of tests (SNPs)
         sig_thresh = Marker.P_STD / len(geno_df.index)
-        print("GWAS Bonferroni-Corrected P-Value: ", sig_thresh)
 
         # Obtaining output assoc.linear filename and creating it
         assoc_filename = basename+".assoc.linear"
@@ -194,4 +195,4 @@ if __name__ == "__main__":
     main()
 
 end = time.time()
-print("Total runtime:", end - start, "seconds")
+print("\n\nTotal runtime:", end - start, "seconds")
