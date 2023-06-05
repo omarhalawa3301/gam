@@ -71,6 +71,7 @@ print(catchphrase, "\n")
                    
     References:    https://www.cog-genomics.org/plink/1.9/assoc#linear
                    https://tiny.cc/gam-float
+                   https://stackoverflow.com/a/42677750/21989720
 """
 
 
@@ -229,7 +230,7 @@ def main():
                 # Predict on the data we fitted the model to
                 predictions = model.predict(new_df)
 
-                #  
+                # Code from last link in references
                 newX = pd.DataFrame({"Constant":np.ones(len(new_df))}).join(pd.DataFrame(new_df.reset_index(drop=True)))
                 MSE = (sum((y-predictions)**2))/(len(newX)-len(newX.columns))
 
@@ -238,11 +239,6 @@ def main():
                 ts_b = params/ sd_b
                 
                 p_values =[2*(1-stats.t.cdf(np.abs(i),(len(newX)-len(newX.columns)-1))) for i in ts_b]
-
-                sd_b = np.round(sd_b,3)
-                ts_b = np.round(ts_b,3)
-                p_values = np.round(p_values,3)
-                params = np.round(params,4)
 
                 myDF3 = pd.DataFrame()
                 myDF3["Coefficients"],myDF3["Standard Errors"],myDF3["t values"],myDF3["Probabilities"] = [params,sd_b,ts_b,p_values]
@@ -329,5 +325,7 @@ def main():
 if __name__ == "__main__":
     main()
 
-end = time.time()
-print("\n\nTotal runtime:", end - start, "seconds")
+    end = time.time()
+    print("\n\nTotal runtime:", end - start, "seconds")
+
+

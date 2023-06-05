@@ -9,14 +9,6 @@
 　　'　　　 1 Impostor remains 　 　　。
 
 　　ﾟ　　　.　　　. ,　　　　.　 .
-  
-  Note to reviewer (yes, you!): We are currently still ironing out the kinks of our tool's implementation, so we would really appreciate it if you could do your review later in the week (we are working toward finishing by Thursday at the very latest). We promise you it will not take too long to run if you simply follow the instructions in this README.md, and we will be updating this note with an estimated time of installing the tool and running it on example data so that you can rest assured. Thank you ඞ
-
-<br> 
-
-  Update to note: installation should be seamless, and running on the **small dataset should take no time at all.** If you wish to run on the much larger, **genome-wide dataset, it should take around 22 minutes** to do all the processing and generate the visuals (which match plink's outputs exactly for the currently-implemented `-l` option) as there is no multithreading implemented yet.
-
-<br> 
 
 # GAM (GWAS with Advanced Machine-learning)
 _If you didn't want who I GWAS, you don't deserve who I **GAM**..._
@@ -25,18 +17,20 @@ This is Pei Ting Chua Chai and Omar Halawa's CSE185 project. It implements a sub
 
 # Install instructions
 
-Installation requires the [`pandas`](https://pandas.pydata.org/), [`cyvcf2`](https://brentp.github.io/cyvcf2/), [`scipy`](https://docs.scipy.org/doc/scipy/), [`matplotlib`](https://matplotlib.org/), [`qqman`](https://pypi.org/project/qqman/), [`art`](https://pypi.org/project/art/) libraries to be installed. You can install these with `pip install` or `conda install`:
+Installation requires the [`pandas`](https://pandas.pydata.org/), [`numpy`](https://numpy.org/), [`cyvcf2`](https://brentp.github.io/cyvcf2/), [`scipy`](https://docs.scipy.org/doc/scipy/), [`sklearn`](https://scikit-learn.org/), [`matplotlib`](https://matplotlib.org/), [`qqman`](https://pypi.org/project/qqman/), [`statsmodels`](https://www.statsmodels.org/stable/index.html), [`art`](https://pypi.org/project/art/) libraries to be installed. You can install these with `pip install` or `conda install`:
 
 _**Important Note:**_ You _may_ experience some issues with installing `cyvcf2` via pip due to versioning discrepancies. As a result, it is recommended you install this one package via conda.
 
 ```
-pip install pandas scipy matplotlib qqman art
+pip install pandas scipy matplotlib qqman art statsmodels sklearn numpy
 conda install cyvcf2
 ```
 
 Once required libraries are installed, you can install `gam` with the following command:
 
 ```
+git clone https://github.com/omarhalawa3301/gam.git
+cd gam
 python setup.py install --user
 ```
 
@@ -60,9 +54,9 @@ This **small test** should produce the following Manhattan plot and qqplot below
 ![title](example-files/ref_visuals/test_qqplot.png "Small Test Plots")  
 
 
-To run `gam` on a **large** test example (using files in this repo) (should take ~22 minutes for this run as it contains 900,000 SNPs and 207 samples, no multithreading implemented yet):
+To run `gam` on a **large** test example with recommended arguments (using files in this repo) (should take ~2 hours for this run as it contains 900,000 SNPs and 207 samples with no multithreading implemented yet):
 ```
-gam -l -g example-files/lab3_gwas.vcf.gz -p example-files/lab3_gwas.phen
+gam -l -g example-files/test2.vcf.gz -p example-files/test.phen --dir large_test_run --out large_test --covar example-files/lab3_gwas.eigenvec
 ```
 Similarly to the small test run, outputs should be under the _example-files_ directory (references also found in sub-directories for cross-checking)
 
@@ -72,9 +66,9 @@ This test should produce the following Manhattan plot and qqplot below:
 
 
 
-To compare to output of `plink --linear`, run:
+To compare this last run to the output of `plink --linear`, run:
 ```
-TODO:
+plink --linear hide-covar --covar example-files/lab3_gwas.eigenvec --allow-no-sex -g example-files/test2.vcf.gz -p example-files/test.phen --maf 0.05 --out plink_run
 ```
 Outputs are identical for the `gam -l` option run
 
@@ -94,10 +88,13 @@ The only required inputs to `gam` are
 
 Users may additionally specify the options below:
 TODO:
-<!-- * `-m FLOAT`, `--maf FLOAT`: float representing minor allele frequency. If specified, the script will perform further filtration on the dataset provided by excluding SNPs whose MAF values lie below the assigned threshold. 
+* `-m FLOAT`, `--maf FLOAT`: float representing minor allele frequency. If specified, the script will perform further filtration on the dataset provided by excluding SNPs whose MAF values lie below the assigned threshold. 
 
-* `-o FILE`, `--out FILE`: path to output result file(s). By default, the path is the current working directory. -->
+* `--covar EIGENVECFILE`: name of .eigenvec file from a PCA run to use in accounting for confounding factors by covariates.
 
+* `-d DIRECTORY`, `--dir DIRECTORY`: path to output result file(s). By default, the path is the current working directory.
+
+* `-o FILE`, `--out file`: basename of result file(s). By default, this is the basename of the genotype file.
 
 # File format
 
@@ -108,19 +105,5 @@ The output file format, **.assoc.linear**, is the same as that of the `plink --l
 This repository was generated by Pei Ting Chua Chai and Omar Halawa, with inspiration from the [CSE 185 Demo Project](https://github.com/gymreklab/cse185-demo-project), [GenePattern Random Forest](https://github.com/genepattern/RandomForest), and many other projects.
 
 Please submit a pull request with any corrections or suggestions.
-
-# Automated Testing (work-in-progress)
-
-To run tests:
-```
-# Run command line tests
-TODO: 
-<!-- sh tests/cmdline_tests.sh -->
-
-# Run unit tests
-TODO: 
-<!-- python -m pytest --cov=. -->
-```
-
 
 

@@ -5,3 +5,5 @@ qqman==1.0.6
 scipy==1.9.1
 matplotlib==3.5.2
 art==5.9
+statsmodels==0.14.0
+sklearn==0.0.post5
