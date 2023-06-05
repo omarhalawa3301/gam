@@ -89,35 +89,36 @@ def file_valid(name, marker):
                 "Expected extension(s): ", end="")
             print(curr_list)
         
-        print()
         # Returning None in the case of invalid file name
         return None
 
 
-def process(name, ext, num_samples):
+def process(name, ext, num_samples, maf):
     """ Function that processes valid file given its extension as an argument
 
     Arguments:
         name:   name of file to process
         ext:    extension of file to process (obtained from file_valid call)
         num_samples:  number of samples
+        maf:    float of minor allele frequency for SNP filtration
     Returns:    returns a call to the appropriate helper function that contains
                 actual logic for processing
     """
 
     if (ext == Extension.VCF_GZ_EXT):
-        return gene_process(name, ext, num_samples)
+        return gene_process(name, ext, num_samples, maf)
     elif (ext == Extension.PHENE_EXT):
         return phene_process(name)
 
 
-def filter_alts(ref, arr):
+def filter_alts(ref, arr, maf):
     """ Function that filters the list of all alleles seen among samples for an SNP 
         by outputting the most frequent non-reference alternative allele
 
     Arguments:
         ref:    reference allele as a string
         arr:    array of genotypes in the format ['G|C', 'C|G', 'G|G']
+        maf:    float of minor allele frequency for SNP filtration
     Returns:    string of most frequent non-reference alternative allele, -1 if only ref was seen
     """
 
@@ -141,16 +142,19 @@ def filter_alts(ref, arr):
 
     curr_max = max(counts, key=counts.get)
 
-    if (len(counts.items()) == 1):
-        # we ignore this SNP as it only has one allele for every sample
+    # If reference not contained in any of the sample's genotypes, we skip it
+    if (ref not in counts):
+        return -1
+    # If the SNP is not biallelic, we skip it
+    elif (len(counts.items()) != 2):
+        return -1
+    # If the SNP's maf is lower than the assigned threshold
+    elif (counts[min(counts, key=counts.get)] / sum(counts.values()) < maf):
         return -1
     elif (curr_max == ref):
         # return the most common allele that isn't the reference
         counts.pop(ref)
         return max(counts, key=counts.get)
-    elif (len(counts.items()) > 2):
-        # there are more than 2 alleles including ref and most common alt
-        return -1
     else:
         # most common allele is an alternative
         return curr_max
@@ -180,13 +184,14 @@ def extract_sample_names(filename, num_samples):
     return sample_names
 
 
-def gene_process(name, ext, num_samples):
+def gene_process(name, ext, num_samples, maf):
     """ Function that processes valid file given its name and extension as an argument
 
     Arguments:
         name:         name of file to process
         ext:          extension of file to process (obtained from file_valid call)
         num_samples:  number of samples
+        maf:    float of minor allele frequency for SNP filtration
     Returns:    dataframe of rows=SNPs and cols=samples with value of genotype (0=homo ref, 1=hetero, 2=homo alt) 
     """
     
@@ -213,7 +218,7 @@ def gene_process(name, ext, num_samples):
             ref = variant.REF
 
             # Most common alternative allele
-            alt = filter_alts(ref, variant.gt_bases)
+            alt = filter_alts(ref, variant.gt_bases, maf)
 
             # Checking for case of no alternative allele present, only ref, so skip SNP
             if (alt == -1):
@@ -273,6 +278,30 @@ def phene_process(name):
     return df
 
 
+def covar_process(name):
+    """ Function that processes a .eigenvec file from a PCA run into a dataframe
+
+    Arguments:
+        name:   name of file to process
+    Returns:    dataframe with columns representing PCs
+    """
+
+    # Assumes that the phenotype file has two columns of sample names to skip
+    df = pd.read_csv(name, sep = '\s+', header=None, index_col=0)
+
+    # Sort the eigenvectors by the name of the sample in the first/second column
+    df.sort_values(df.columns[0], ascending=True, inplace=True)
+
+    # Drop the first column which has the same sample name as the second column
+    df = df.drop(1, axis=1)
+
+    # Rename columns to start at 1
+    df.columns = list(range(1, len(df.columns)+1))
+
+
+    return df   
+
+
 def assoc_result(chrs, snp_ids, bps, alts, test_labels, nmiss, beta, t_stat, pvals, filename):
     """ Function that creates and outputs the result assoc.linear file to the specified output directory 
     Arguments:
@@ -310,4 +339,4 @@ def plot(in_name, out_name):
     fig, (ax0, ax1) = plt.subplots(1, 2, gridspec_kw={'width_ratios': [2, 1]})
     fig.set_size_inches((15, 5))
     qqman.manhattan(data, ax=ax0)
-    qqman.qqplot(data, ax=ax1, out=out_name+"_qqplot.png")
+    qqman.qqplot(data, ax=ax1, out=out_name)
