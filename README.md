@@ -56,12 +56,12 @@ This **small test** should produce the following Manhattan plot and qqplot below
 
 To run `gam` on a **large** test example with recommended arguments (using files in this repo) (should take ~2 hours for this run as it contains 900,000 SNPs and 207 samples with no multithreading implemented yet):
 ```
-gam -l -g example-files/test2.vcf.gz -p example-files/test.phen --dir large_test_run --out large_test --covar example-files/lab3_gwas.eigenvec
+gam -l -g example-files/lab3_gwas.vcf.gz -p example-files/lab3_gwas.phen --dir large_test_run --out large_test --covar example-files/lab3_gwas.eigenvec
 ```
 Similarly to the small test run, outputs should be under the _example-files_ directory (references also found in sub-directories for cross-checking)
 
 This test should produce the following Manhattan plot and qqplot below:
-![title](example-files/ref_visuals/lab3_gwas_qqplot.png "Genome-Wide Test Plots")  
+![title](example-files/ref_visuals/lab3_gwas.png "Genome-Wide Test Plots")  
 
 
 
@@ -80,8 +80,8 @@ The only required inputs to `gam` are
 2. `-p PHENOTYPE_FILE`, `--phenotype PHENOTYPE_FILE` as a **.phen** file
 3. Either _**one**_ of the three following modes:
 * `-l`, `--linear` where GWAS with a normal linear-regression model is done
-* `--le`, `--linear-ensemble` where GWAS is done using an ensemble of linear regression models
-* `--bdt`, `--boosted` where GWAS is done using boosted decision trees to build the model
+* TODO: `--le`, `--linear-ensemble` where GWAS is done using an ensemble of linear regression models
+* TODO: `--bdt`, `--boosted` where GWAS is done using boosted decision trees to build the model
     
 
 

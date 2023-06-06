@@ -325,7 +325,5 @@ def main():
 if __name__ == "__main__":
     main()
 
-    end = time.time()
-    print("\n\nTotal runtime:", end - start, "seconds")
-
-
+end = time.time()
+print("\n\nTotal runtime:", end - start, "seconds")
