@@ -10,33 +10,27 @@
 
 　　ﾟ　　　.　　　. ,　　　　.　 .
 
-
-# GAM (CSE185 Project)
+# GAM (GWAS with Advanced Machine-learning)
+_If you didn't want who I GWAS, you don't deserve who I **GAM**..._
 
 This is Pei Ting Chua Chai and Omar Halawa's CSE185 project. It implements a subset of the the "--linear" GWAS method available through plink. See the [plink --linear](https://www.cog-genomics.org/plink/1.9/assoc#linear) page for more details.
 
 # Install instructions
 
-Installation requires the [`pandas`](https://pandas.pydata.org/), [`cyvcf2`](https://brentp.github.io/cyvcf2/), [`numpy`](https://numpy.org/) libraries to be installed. You can install these with `pip install` or `conda install`:
+Installation requires the [`pandas`](https://pandas.pydata.org/), [`numpy`](https://numpy.org/), [`cyvcf2`](https://brentp.github.io/cyvcf2/), [`scipy`](https://docs.scipy.org/doc/scipy/), [`sklearn`](https://scikit-learn.org/), [`matplotlib`](https://matplotlib.org/), [`qqman`](https://pypi.org/project/qqman/), [`statsmodels`](https://www.statsmodels.org/stable/index.html), [`art`](https://pypi.org/project/art/) libraries to be installed. You can install these with `pip install` or `conda install`:
 
-_**Important Note:**_ You  may experience some issues with installing `cyvcf2` via pip due to versioning discrepancies. As a result, it is _highly recommended_ you install it via conda.
+_**Important Note:**_ You _may_ experience some issues with installing `cyvcf2` via pip due to versioning discrepancies. As a result, it is recommended you install this one package via conda.
 
 ```
-pip install pandas
-pip install numpy
+pip install pandas scipy matplotlib qqman art statsmodels sklearn numpy
 conda install cyvcf2
 ```
 
 Once required libraries are installed, you can install `gam` with the following command:
 
 ```
-python setup.py install
-```
-
-Note: if you do not have root access, you can run the commands above with additional options to install locally:
-```
-pip install --user pandas numpy
-conda install -p ~/.local cyvcf2
+git clone https://github.com/omarhalawa3301/gam.git
+cd gam
 python setup.py install --user
 ```
 
@@ -50,20 +44,33 @@ The basic usage of `gam` is (uses the `--linear` option, one of the 3 available 
 gam -l -g genotype.vcf.gz -p phenotype.phen
 ```
 
-To run `gam` on a small test example (using files in this repo):
+To run `gam` on a **small** test example (using files in this repo) (this run should not take more than 1 second):
 ```
-TODO: gam -g example-files/test.vcf.gz -p example-files/test.phen
+gam -l -g example-files/test.vcf.gz -p example-files/test.phen
 ```
+You should then be the output assoc.linear results file and plot png file under the _example-files_ directory (there are references under the _example-files/ref_results_ and _example-files/ref_visuals_ directories)
 
-This should produce the following Manhattan plot below:
-```
-TODO:
-```
+This **small test** should produce the following Manhattan plot and qqplot below:
+![title](example-files/ref_visuals/test_qqplot.png "Small Test Plots")  
 
-To compare to output of `plink --linear`, run:
+
+To run `gam` on a **large** test example with recommended arguments (using files in this repo) (should take ~2 hours for this run as it contains 900,000 SNPs and 207 samples with no multithreading implemented yet):
 ```
-TODO:
+gam -l -g example-files/lab3_gwas.vcf.gz -p example-files/lab3_gwas.phen --dir large_test_run --out large_test --covar example-files/lab3_gwas.eigenvec
 ```
+Similarly to the small test run, outputs should be under the _example-files_ directory (references also found in sub-directories for cross-checking)
+
+This test should produce the following Manhattan plot and qqplot below:
+![title](example-files/ref_visuals/lab3_gwas.png "Genome-Wide Test Plots")  
+
+
+
+
+To compare this last run to the output of `plink --linear`, run:
+```
+plink --linear hide-covar --covar example-files/lab3_gwas.eigenvec --allow-no-sex -g example-files/test2.vcf.gz -p example-files/test.phen --maf 0.05 --out plink_run
+```
+Outputs are identical for the `gam -l` option run
 
 # gam options
 
@@ -73,18 +80,21 @@ The only required inputs to `gam` are
 2. `-p PHENOTYPE_FILE`, `--phenotype PHENOTYPE_FILE` as a **.phen** file
 3. Either _**one**_ of the three following modes:
 * `-l`, `--linear` where GWAS with a normal linear-regression model is done
-* `--le`, `--linear-ensemble` where GWAS is done using an ensemble of linear regression models
-* `--bdt`, `--boosted` where GWAS is done using boosted decision trees to build the model
+* TODO: `--le`, `--linear-ensemble` where GWAS is done using an ensemble of linear regression models
+* TODO: `--bdt`, `--boosted` where GWAS is done using boosted decision trees to build the model
     
 
 
 
 Users may additionally specify the options below:
-
+TODO:
 * `-m FLOAT`, `--maf FLOAT`: float representing minor allele frequency. If specified, the script will perform further filtration on the dataset provided by excluding SNPs whose MAF values lie below the assigned threshold. 
 
-* `-o FILE`, `--out FILE`: path to output result file(s). By default, the path is the current working directory.
+* `--covar EIGENVECFILE`: name of .eigenvec file from a PCA run to use in accounting for confounding factors by covariates.
 
+* `-d DIRECTORY`, `--dir DIRECTORY`: path to output result file(s). By default, the path is the current working directory.
+
+* `-o FILE`, `--out file`: basename of result file(s). By default, this is the basename of the genotype file.
 
 # File format
 
@@ -95,17 +105,5 @@ The output file format, **.assoc.linear**, is the same as that of the `plink --l
 This repository was generated by Pei Ting Chua Chai and Omar Halawa, with inspiration from the [CSE 185 Demo Project](https://github.com/gymreklab/cse185-demo-project), [GenePattern Random Forest](https://github.com/genepattern/RandomForest), and many other projects.
 
 Please submit a pull request with any corrections or suggestions.
-
-# Testing (work-in-progress)
-
-To run tests:
-```
-# Run command line tests
-TODO: sh tests/cmdline_tests.sh
-
-# Run unit tests
-TODO: python -m pytest --cov=.
-```
-
 
 
