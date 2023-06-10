@@ -27,6 +27,11 @@ python setup.py install --user
 
 If the install was successful, typing `gam --help` should show a useful message.
 
+If you get an error saying the command was not found, then run the following (subsitute the appropriate <user>):
+```
+export PATH=$PATH:/home/<user>/.local/bin
+```
+
 # Basic usage
 
 The basic usage of `gam` is (uses the `--linear` option, one of the 3 available modes - see **gam options**):
