@@ -7,7 +7,6 @@ import os
 from art import *
 from sklearn.linear_model import LinearRegression
 from scipy import stats
-import statsmodels.api as sm
 
 # Importing file processing functions
 from .gam_utils import *
@@ -325,5 +324,5 @@ def main():
 if __name__ == "__main__":
     main()
 
-    end = time.time()
-    print("\n\nTotal runtime:", end - start, "seconds")
+end = time.time()
+print("\n\nTotal runtime:", end - start, "seconds")

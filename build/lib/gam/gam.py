@@ -7,7 +7,6 @@ import os
 from art import *
 from sklearn.linear_model import LinearRegression
 from scipy import stats
-import statsmodels.api as sm
 
 # Importing file processing functions
 from .gam_utils import *

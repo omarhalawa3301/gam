@@ -1,15 +1,3 @@
-. 　　　。　　　　•　 　ﾟ　　。 　　.
-
-　　　.　　　 　　.　　　　　。　　 。　. 　
-
-.　　 。　　　　　 ඞ 。 . 　　 • 　　　　•
-
-　　ﾟ　　 Red was not An Impostor.　 。　.
-
-　　'　　　 1 Impostor remains 　 　　。
-
-　　ﾟ　　　.　　　. ,　　　　.　 .
-
 # GAM (GWAS with Advanced Machine-learning)
 _If you didn't want who I GWAS, you don't deserve who I **GAM**..._
 
@@ -17,13 +5,13 @@ This is Pei Ting Chua Chai and Omar Halawa's CSE185 project. It implements a sub
 
 # Install instructions
 
-Installation requires the [`pandas`](https://pandas.pydata.org/), [`numpy`](https://numpy.org/), [`cyvcf2`](https://brentp.github.io/cyvcf2/), [`scipy`](https://docs.scipy.org/doc/scipy/), [`sklearn`](https://scikit-learn.org/), [`matplotlib`](https://matplotlib.org/), [`qqman`](https://pypi.org/project/qqman/), [`statsmodels`](https://www.statsmodels.org/stable/index.html), [`art`](https://pypi.org/project/art/) libraries to be installed. You can install these with `pip install` or `conda install`:
+Installation requires the [`pandas`](https://pandas.pydata.org/), [`numpy`](https://numpy.org/), [`cyvcf2`](https://brentp.github.io/cyvcf2/), [`scipy`](https://docs.scipy.org/doc/scipy/), [`sklearn`](https://scikit-learn.org/), [`matplotlib`](https://matplotlib.org/), [`qqman`](https://pypi.org/project/qqman/), [`statsmodels`](https://www.statsmodels.org/stable/index.html), [`art`](https://pypi.org/project/art/) libraries to be installed. You can install these with [`pip install`](https://www.dataquest.io/blog/install-pip-windows/) or [`conda install`](https://dev.to/waylonwalker/installing-miniconda-on-linux-from-the-command-line-4ad7):
 
 _**Important Note:**_ You _may_ experience some issues with installing `cyvcf2` via pip due to versioning discrepancies. As a result, it is recommended you install this one package via conda.
 
 ```
 pip install pandas scipy matplotlib qqman art statsmodels sklearn numpy
-conda install cyvcf2
+conda install -c bioconda cyvcf2
 ```
 
 Once required libraries are installed, you can install `gam` with the following command:
