@@ -40,7 +40,7 @@ The basic usage of `gam` is (uses the `--linear` option, one of the 3 available 
 gam -l -g genotype.vcf.gz -p phenotype.phen
 ```
 
-To run `gam` on a **small** test example (using files in this repo) (this run should not take more than 1 second):
+To run `gam` on a **small** test example (using files in this repo) (this run should not take more than 1-2 seconds):
 ```
 gam -l -g example-files/test.vcf.gz -p example-files/test.phen --covar example-files/lab3_gwas.eigenvec --maf 0.05
 ```
