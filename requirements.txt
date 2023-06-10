@@ -1,6 +1,6 @@
-pandas=2.0.1
-numpy=1.23.1
-cyvcf2=0.30.16  
+pandas==2.0.1
+numpy==1.23.1
+cyvcf2==0.30.16  
 qqman==1.0.6
 scipy==1.9.1
 matplotlib==3.5.2
