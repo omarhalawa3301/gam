@@ -42,7 +42,7 @@ gam -l -g genotype.vcf.gz -p phenotype.phen
 
 To run `gam` on a **small** test example (using files in this repo) (this run should not take more than 1 second):
 ```
-gam -l -g example-files/test.vcf.gz -p example-files/test.phen
+gam -l -g example-files/test.vcf.gz -p example-files/test.phen --covar example-files/lab3_gwas.eigenvec --maf 0.05
 ```
 You should then be the output assoc.linear results file and plot png file under the _example-files_ directory (there are references under the _example-files/ref_results_ and _example-files/ref_visuals_ directories)
 
@@ -52,7 +52,7 @@ This **small test** should produce the following Manhattan plot and qqplot below
 
 To run `gam` on a **large** test example with recommended arguments (using files in this repo) (should take ~2 hours for this run as it contains 900,000 SNPs and 207 samples with no multithreading implemented yet):
 ```
-gam -l -g example-files/lab3_gwas.vcf.gz -p example-files/lab3_gwas.phen --dir large_test_run --out large_test --covar example-files/lab3_gwas.eigenvec
+gam -l -g example-files/lab3_gwas.vcf.gz -p example-files/lab3_gwas.phen --dir large_test_run --out large_test --covar example-files/lab3_gwas.eigenvec --maf 0.05
 ```
 Similarly to the small test run, outputs should be under the _example-files_ directory (references also found in sub-directories for cross-checking)
 
