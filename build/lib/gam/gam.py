@@ -319,10 +319,12 @@ def main():
     # Plotting visualizations (Manhattan and qqplot)
     # Uses genotype file's basename for plot graphs
     plot(assoc_filename, plot_filename)
+
+        
+    end = time.time()
+    print("\n\nTotal runtime:", end - start, "seconds")
         
 
 if __name__ == "__main__":
     main()
 
-end = time.time()
-print("\n\nTotal runtime:", end - start, "seconds")
