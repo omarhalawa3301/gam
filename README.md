@@ -50,7 +50,7 @@ This **small test** should produce the following Manhattan plot and qqplot below
 ![title](example-files/ref_visuals/test_qqplot.png "Small Test Plots")  
 
 
-To run `gam` on a **large** test example with recommended arguments (using files in this repo) (should take ~2 hours for this run as it contains 900,000 SNPs and 207 samples with no multithreading implemented yet):
+To run `gam` on a **large** test example with recommended arguments (using files in this repo) (should take ~2-3 hours for this run as it contains 900,000 SNPs and 207 samples with no multithreading implemented yet):
 ```
 gam -l -g example-files/lab3_gwas.vcf.gz -p example-files/lab3_gwas.phen --dir large_test_run --out large_test --covar example-files/lab3_gwas.eigenvec --maf 0.05
 ```
@@ -64,7 +64,7 @@ This test should produce the following Manhattan plot and qqplot below:
 
 To compare this last run to the output of `plink --linear`, run:
 ```
-plink --linear hide-covar --covar example-files/lab3_gwas.eigenvec --allow-no-sex -g example-files/test2.vcf.gz -p example-files/test.phen --maf 0.05 --out plink_run
+plink --linear hide-covar --covar example-files/lab3_gwas.eigenvec --allow-no-sex -g example-files/test.vcf.gz -p example-files/test.phen --maf 0.05 --out plink_run
 ```
 Outputs are identical for the `gam -l` option run
 
