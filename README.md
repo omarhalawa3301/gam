@@ -17,7 +17,7 @@ This is Pei Ting Chua Chai and Omar Halawa's CSE185 project. It implements a sub
 
 # Install instructions
 
-Installation requires the [`pandas`](https://pandas.pydata.org/), [`numpy`](https://numpy.org/), [`cyvcf2`](https://brentp.github.io/cyvcf2/), [`scipy`](https://docs.scipy.org/doc/scipy/), [`sklearn`](https://scikit-learn.org/), [`matplotlib`](https://matplotlib.org/), [`qqman`](https://pypi.org/project/qqman/), [`statsmodels`](https://www.statsmodels.org/stable/index.html), [`art`](https://pypi.org/project/art/) libraries to be installed. You can install these with [`pip install`](https://www.dataquest.io/blog/install-pip-windows/) or [`conda install`](https://docs.anaconda.com/free/anaconda/install/linux/):
+Installation requires the [`pandas`](https://pandas.pydata.org/), [`numpy`](https://numpy.org/), [`cyvcf2`](https://brentp.github.io/cyvcf2/), [`scipy`](https://docs.scipy.org/doc/scipy/), [`sklearn`](https://scikit-learn.org/), [`matplotlib`](https://matplotlib.org/), [`qqman`](https://pypi.org/project/qqman/), [`statsmodels`](https://www.statsmodels.org/stable/index.html), [`art`](https://pypi.org/project/art/) libraries to be installed. You can install these with [`pip install`](https://www.dataquest.io/blog/install-pip-windows/) or [`conda install`](https://dev.to/waylonwalker/installing-miniconda-on-linux-from-the-command-line-4ad7):
 
 _**Important Note:**_ You _may_ experience some issues with installing `cyvcf2` via pip due to versioning discrepancies. As a result, it is recommended you install this one package via conda.
 
