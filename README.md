@@ -27,7 +27,7 @@ python setup.py install --user
 
 If the install was successful, typing `gam --help` should show a useful message.
 
-If you get an error saying the command was not found, then run the following (subsitute the appropriate <user>):
+If you get an error saying the command was not found, then run the following (with substituting the appropriate user directory):
 ```
 export PATH=$PATH:/home/<user>/.local/bin
 ```
