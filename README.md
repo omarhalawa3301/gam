@@ -23,7 +23,7 @@ _**Important Note:**_ You _may_ experience some issues with installing `cyvcf2` 
 
 ```
 pip install pandas scipy matplotlib qqman art statsmodels sklearn numpy
-conda install cyvcf2
+conda install -c bioconda cyvcf2
 ```
 
 Once required libraries are installed, you can install `gam` with the following command:
