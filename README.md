@@ -14,7 +14,7 @@ pip install pandas==1.5.0 numpy==1.23.3 qqman==1.0.6 scipy==1.9.3 statsmodels==0
 _**Important Note:**_ If the above command fails in any way, try the following two commands below which install everything via pip except for `cyvcf2` which is installed via conda.
 ```
 pip install pandas==1.5.0 numpy==1.23.3 qqman==1.0.6 scipy==1.9.3 statsmodels==0.14.0 matplotlib==3.7.1 art==5.9 scikit-learn==1.2.2 
-conda install -c bioconda cyvcf2=0.30.22
+conda install -c bioconda cyvcf2
 ```
 
 Once required libraries are installed, you can install `gam` with the following command:
