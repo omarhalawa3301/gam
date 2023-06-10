@@ -203,7 +203,7 @@ def main():
         for snp in range(0, num_snps):
 
             # Genotype values for a specific SNP among samples (0, 1, or 2)
-            X = geno_df.iloc[snp].value_counts
+            X = geno_df.iloc[snp].values
 
             # Phenotype values for a specific SNP among samples 
             y = pheno_df["Phenotype"]
