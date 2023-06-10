@@ -7,6 +7,7 @@ import os
 from art import *
 from sklearn.linear_model import LinearRegression
 from scipy import stats
+import statsmodels.api as sm
 
 # Importing file processing functions
 from .gam_utils import *
@@ -319,12 +320,9 @@ def main():
     # Plotting visualizations (Manhattan and qqplot)
     # Uses genotype file's basename for plot graphs
     plot(assoc_filename, plot_filename)
-
-        
+    
     end = time.time()
     print("\n\nTotal runtime:", end - start, "seconds")
-        
 
 if __name__ == "__main__":
     main()
-
