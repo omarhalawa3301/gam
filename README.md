@@ -10,8 +10,8 @@ Installation requires the [`pandas`](https://pandas.pydata.org/), [`numpy`](http
 _**Important Note:**_ You _may_ experience some issues with installing `cyvcf2` via pip due to versioning discrepancies. As a result, it is recommended you install this one package via conda.
 
 ```
-pip install pandas==1.5.0 numpy==1.23.3 qqman==1.0.6 scipy==1.9.3 matplotlib==3.7.1 art==5.9 sklearn==0.0.post5 scikit-learn==1.2.2
-cyvcf2==0.30.22
+pip install pandas==1.5.0 numpy==1.23.3 qqman==1.0.6 scipy==1.9.3 matplotlib==3.7.1 art==5.9 sklearn==0.0.post5 scikit-learn==1.2.2 cyvcf2==0.30.22
+
 conda install -c bioconda cyvcf2
 ```
 
